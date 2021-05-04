@@ -14391,7 +14391,7 @@ div.jp-OutputPrompt {
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Problem-Definition">Problem Definition<a class="anchor-link" href="#Problem-Definition">&#182;</a></h2><p>The refinery transforms <strong>crude oil</strong> in petrols and fuels to be sold. Thus, we want o <strong>maximize profit</strong> from the daily production.</p>
+<h2 id="Problem-Definition">Problem Definition<a class="anchor-link" href="#Problem-Definition">&#182;</a></h2><p>The refinery transforms <strong>crude oil</strong> in petrols and fuels to be sold. Thus, we want to <strong>maximize profit</strong> in the daily operation.</p>
 
 </div>
 </div><div class="fragment">
@@ -14439,39 +14439,18 @@ Using license file /home/bruno/gurobi.lic
 </div></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Supplies">Supplies<a class="anchor-link" href="#Supplies">&#182;</a></h2><p>Crude oil 1 and crude oil 2 are available for production in a fixed rate of 20 000 and 30 000 barrels a day resp. We'll use CRA and CRB for the amount of each oil used.</p>
-<p>Thus,$$
-    CRA \le 20 000 \\
-    CRB \le 30 000
-$$ are our first constraints.</p>
+<h3 id="Supply">Supply<a class="anchor-link" href="#Supply">&#182;</a></h3><p>Crude oil 1 and crude oil 2 are available for production in a fixed rate of 20 000 and 30 000 barrels a day resp.</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cra</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CRA&#39;</span><span class="p">)</span>
-<span class="n">crb</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">30000</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CRB&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Distillation">Distillation<a class="anchor-link" href="#Distillation">&#182;</a></h3><p>Splits the two types of crude oil in different subproducts, with a bit of waste.</p>
+<h3 id="Distillation">Distillation<a class="anchor-link" href="#Distillation">&#182;</a></h3><p>Splits the two types of crude oil in different subproducts, with a bit of waste, and at most 45 000 barrels of crude oil a day.</p>
 <table>
 <thead><tr>
 <th style="text-align:left"></th>
-<th style="text-align:center">CRA</th>
-<th style="text-align:center">CRB</th>
+<th style="text-align:center">Crude Oil 1 (CRA)</th>
+<th style="text-align:center">Crude Oil 2 (CRB)</th>
 </tr>
 </thead>
 <tbody>
@@ -14509,93 +14488,7 @@ $$ are our first constraints.</p>
 </table>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ln</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LN&#39;</span><span class="p">)</span>
-<span class="n">mn</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;MN&#39;</span><span class="p">)</span>
-<span class="n">hn</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HN&#39;</span><span class="p">)</span>
-<span class="n">lo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LO&#39;</span><span class="p">)</span>
-<span class="n">ho</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HO&#39;</span><span class="p">)</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>This can be assured through a continuity contraint on the related variables. $$
-\begin{bmatrix}
-0.1     &amp;     0.15    \\
-0.2     &amp;     0.25    \\
-0.2     &amp;     0.18    \\
-0.12    &amp;     0.08    \\
-0.2     &amp;     0.19    \\
-0.13    &amp;     0.12 
-\end{bmatrix} \begin{bmatrix} CRA \\ CRB \end{bmatrix} = \begin{bmatrix}
-LN \\
-MN \\
-HN \\
-LO \\
-HO \\
-R
-\end{bmatrix}
-$$</p>
-
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.1</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.15</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">ln</span><span class="p">,</span> <span class="s1">&#39;D1&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.2</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.25</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">mn</span><span class="p">,</span> <span class="s1">&#39;D2&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.2</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.18</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">hn</span><span class="p">,</span> <span class="s1">&#39;D3&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.12</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.08</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">lo</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.2</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.19</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">ho</span><span class="p">,</span> <span class="s1">&#39;D5&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.13</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.12</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">r</span><span class="p">,</span> <span class="s1">&#39;D6&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The distillery has a limit of 45 000 barrels of crude oil a day. $$
-    CRA + CRB \le 45 000
-$$</p>
-
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">cra</span> <span class="o">+</span> <span class="n">crb</span> <span class="o">&lt;=</span> <span class="mi">45000</span><span class="p">,</span> <span class="s1">&#39;D0&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Reforming">Reforming<a class="anchor-link" href="#Reforming">&#182;</a></h3><p>Can be applied to <strong>naphtas</strong>, generating reformed gasoline.</p>
@@ -14616,78 +14509,13 @@ $$</p>
 </tr>
 </tbody>
 </table>
+<p>At most 10 000 barrels of naphta can be reformed per day.</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lnrg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LNRG&#39;</span><span class="p">)</span>
-<span class="n">mnrg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;MNRG&#39;</span><span class="p">)</span>
-<span class="n">hnrg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HNRG&#39;</span><span class="p">)</span>
-
-<span class="n">rg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RG&#39;</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
+</div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>This gets us another continuity constraint. $$
-0.6 LNRG + 0.52 MNRG + 0.45 HNRG = RG
-$$</p>
-
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.6</span><span class="o">*</span><span class="n">lnrg</span> <span class="o">+</span> <span class="mf">0.52</span><span class="o">*</span><span class="n">mnrg</span> <span class="o">+</span> <span class="mf">0.45</span><span class="o">*</span><span class="n">hnrg</span> <span class="o">==</span> <span class="n">rg</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>At most 10 000 barrels of naphta can be reformed per day. $$
-    LNRG + MNRG + HNRG \le 10000
-$$</p>
-
-</div>
-</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lnrg</span> <span class="o">+</span> <span class="n">mnrg</span> <span class="o">+</span> <span class="n">hnrg</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;R0&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Cracking">Cracking<a class="anchor-link" href="#Cracking">&#182;</a></h3><p>Applies to the <strong>refined oils</strong>.</p>
+<h3 id="Cracking">Cracking<a class="anchor-link" href="#Cracking">&#182;</a></h3><p>Applies to the <strong>refined oils</strong> and has a limit of 8000 barrels of oil a day.</p>
 <table>
 <thead><tr>
 <th></th>
@@ -14710,77 +14538,10 @@ $$</p>
 </table>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">locgo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LOCGO&#39;</span><span class="p">)</span>
-<span class="n">hocgo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HOCGO&#39;</span><span class="p">)</span>
-
-<span class="n">co</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CO&#39;</span><span class="p">)</span>
-<span class="n">cg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CG&#39;</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
+</div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-$$
-    0.68 LOCGO + 0.75HOCGO = CO \\
-    0.28 LOCGO + 0.20HOCGO = CG
-$$
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.68</span><span class="o">*</span><span class="n">locgo</span> <span class="o">+</span> <span class="mf">0.75</span><span class="o">*</span><span class="n">hocgo</span> <span class="o">==</span> <span class="n">co</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.28</span><span class="o">*</span><span class="n">locgo</span> <span class="o">+</span> <span class="mf">0.20</span><span class="o">*</span><span class="n">hocgo</span> <span class="o">==</span> <span class="n">cg</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>This facility has a limit of 8000 barrels of oil a day. $$
-    LOCGO + HOCGO \le 8000
-$$</p>
-
-</div>
-</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">locgo</span> <span class="o">+</span> <span class="n">hocgo</span> <span class="o">&lt;=</span> <span class="mi">8000</span><span class="p">,</span> <span class="s1">&#39;C0&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Cracking can also be applied to <strong>residuum</strong>.</p>
+<p>Cracking can also be applied to <strong>residuum</strong> to produce lube-oil.</p>
 <table>
 <thead><tr>
 <th></th>
@@ -14794,74 +14555,10 @@ $$</p>
 </tr>
 </tbody>
 </table>
+<p>The refinery must produce <em>at least</em> 500 barrels and <em>at most</em> 1000 barrels daily.</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rlbo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RLBO&#39;</span><span class="p">)</span>
-
-<span class="n">lbo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LBO&#39;</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-$$
-    0.5 RLBO = LBO
-$$
-</div>
-</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">rlbo</span> <span class="o">==</span> <span class="n">lbo</span><span class="p">,</span> <span class="s1">&#39;C3&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><em>At least</em> 500 barrels of lube oil must be produced daily, and <em>at most</em> 1000 barrels. $$
-    LBO \ge 500 \\
-    LBO \le 1000
-$$</p>
-
-</div>
-</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lbo</span> <span class="o">&gt;=</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lbo</span> <span class="o">&lt;=</span> <span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Blending">Blending<a class="anchor-link" href="#Blending">&#182;</a></h3><p>The materials can be blended into:</p>
@@ -14875,228 +14572,43 @@ $$</p>
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="Motor-fuel">Motor fuel<a class="anchor-link" href="#Motor-fuel">&#182;</a></h4><p>A mixture between naphtas, reformed gasoline and cracked gasoline can generate premium motor fuel (PMF) or regular motor fuel (RMF) depending on its resulting octane number.
-$$
-    LNPMF + MNPMF + HNPMF + RGPMF + CGPMF = PMF \\
-    LNRMF + MNRMF + HNRMF + RGRMF + CGRMF = RMF
-$$</p>
+<h4 id="Motor-fuel">Motor fuel<a class="anchor-link" href="#Motor-fuel">&#182;</a></h4><p>A mixture of naphtas, reformed gasoline and cracked gasoline can generate premium motor fuel (PMF) or regular motor fuel (RMF) depending on its resulting octane number.</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lnpmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LNPMF&#39;</span><span class="p">)</span>
-<span class="n">mnpmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;MNPMF&#39;</span><span class="p">)</span>
-<span class="n">hnpmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HNPMF&#39;</span><span class="p">)</span>
-<span class="n">rgpmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RGPMF&#39;</span><span class="p">)</span>
-<span class="n">cgpmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CGPMF&#39;</span><span class="p">)</span>
-
-<span class="n">lnrmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LNRMF&#39;</span><span class="p">)</span>
-<span class="n">mnrmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;MNRMF&#39;</span><span class="p">)</span>
-<span class="n">hnrmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HNRMF&#39;</span><span class="p">)</span>
-<span class="n">rgrmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RGRMF&#39;</span><span class="p">)</span>
-<span class="n">cgrmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CGRMF&#39;</span><span class="p">)</span>
-
-<span class="n">pmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PMF&#39;</span><span class="p">)</span>
-<span class="n">rmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RMF&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lnpmf</span> <span class="o">+</span> <span class="n">mnpmf</span> <span class="o">+</span> <span class="n">hnpmf</span> <span class="o">+</span> <span class="n">rgpmf</span> <span class="o">+</span> <span class="n">cgpmf</span> <span class="o">==</span> <span class="n">pmf</span><span class="p">,</span> <span class="s1">&#39;B1&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lnrmf</span> <span class="o">+</span> <span class="n">mnrmf</span> <span class="o">+</span> <span class="n">hnrmf</span> <span class="o">+</span> <span class="n">rgrmf</span> <span class="o">+</span> <span class="n">cgrmf</span> <span class="o">==</span> <span class="n">rmf</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Now we can constrain the continuity of the naphta-variables
-$$
-    LN = LNRG + LNPMF + LNRMF \\
-    MN = MNRG + MNPMF + MNRMF \\
-    HN = HNRG + HNPMF + HNRMF
-$$
-and of the gasoline-variables.
-$$
-    CG = CGPMF + CGRMF \\
-    RG = RGPMF + RGRMF
-$$</p>
-
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">ln</span> <span class="o">==</span> <span class="n">lnrg</span> <span class="o">+</span> <span class="n">lnpmf</span> <span class="o">+</span> <span class="n">lnrmf</span><span class="p">,</span> <span class="s1">&#39;LN&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">mn</span> <span class="o">==</span> <span class="n">mnrg</span> <span class="o">+</span> <span class="n">mnpmf</span> <span class="o">+</span> <span class="n">mnrmf</span><span class="p">,</span> <span class="s1">&#39;MN&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">hn</span> <span class="o">==</span> <span class="n">hnrg</span> <span class="o">+</span> <span class="n">hnpmf</span> <span class="o">+</span> <span class="n">hnrmf</span><span class="p">,</span> <span class="s1">&#39;HN&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">cg</span> <span class="o">==</span> <span class="n">cgpmf</span> <span class="o">+</span> <span class="n">cgrmf</span><span class="p">,</span> <span class="s1">&#39;CG&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">rg</span> <span class="o">==</span> <span class="n">rgpmf</span> <span class="o">+</span> <span class="n">rgrmf</span><span class="p">,</span> <span class="s1">&#39;RG&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
+</div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>If the octane number of the blend (assumed to be linear) is higher than 84, it is sold as <em>regular</em>. If it is higher than 94, it is sold as <em>premium</em>. Reformed gasoline and cracked gasoline have an octane number of 115 and 105 resp., while the light, medium and heavy naphtas have 90, 80 and 70 octane number resp.</p>
-$$
-    90 LNPMF + 80 MNPMF + 70 HNPMF + 115 RGPMF + 105 CGPMF \ge 94 PMF \\
-    90 LNRMF + 80 MNRMF + 70 HNRMF + 115 RGRMF + 105 CGRMF \ge 84 RMF
-$$
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mi">90</span><span class="o">*</span><span class="n">lnpmf</span> <span class="o">+</span> <span class="mi">80</span><span class="o">*</span><span class="n">mnpmf</span> <span class="o">+</span> <span class="mi">70</span><span class="o">*</span><span class="n">hnpmf</span> <span class="o">+</span> <span class="mi">115</span><span class="o">*</span><span class="n">rgpmf</span> <span class="o">+</span> <span class="mi">105</span><span class="o">*</span><span class="n">cgpmf</span> <span class="o">&gt;=</span> <span class="mi">94</span><span class="o">*</span><span class="n">pmf</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mi">90</span><span class="o">*</span><span class="n">lnrmf</span> <span class="o">+</span> <span class="mi">80</span><span class="o">*</span><span class="n">mnrmf</span> <span class="o">+</span> <span class="mi">70</span><span class="o">*</span><span class="n">hnrmf</span> <span class="o">+</span> <span class="mi">115</span><span class="o">*</span><span class="n">rgrmf</span> <span class="o">+</span> <span class="mi">105</span><span class="o">*</span><span class="n">cgrmf</span> <span class="o">&gt;=</span> <span class="mi">84</span><span class="o">*</span><span class="n">rmf</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
 </div>
-</div>
-</div>
-
 </div></div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Premium motor fuel production must be at least 40 % that of regular motor fuel.
-$$
-    PMF \ge 0.4 RMF
-$$</p>
+<p>Premium motor fuel production must be at least 40 % that of regular motor fuel.</p>
 
 </div>
-</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">pmf</span> <span class="o">&gt;=</span> <span class="mf">0.4</span><span class="o">*</span><span class="n">rmf</span><span class="p">,</span> <span class="s1">&#39;B5&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
 </div></div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="Jet-fuel">Jet fuel<a class="anchor-link" href="#Jet-fuel">&#182;</a></h4><p>A mixture of light, heavy, cracked oils and residuum.
-$$
-    LOJF + HOJF + COJF + RJF = JF
-$$</p>
+<h4 id="Jet-fuel">Jet fuel<a class="anchor-link" href="#Jet-fuel">&#182;</a></h4><p>A mixture of light, heavy, cracked oils and residuum.</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lojf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LOJF&#39;</span><span class="p">)</span>
-<span class="n">hojf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HOJF&#39;</span><span class="p">)</span>
-<span class="n">cojf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;COJF&#39;</span><span class="p">)</span>
-<span class="n">rjf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RJF&#39;</span><span class="p">)</span>
-
-<span class="n">jf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;JF&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lojf</span> <span class="o">+</span> <span class="n">hojf</span> <span class="o">+</span> <span class="n">cojf</span> <span class="o">+</span> <span class="n">rjf</span> <span class="o">==</span> <span class="n">jf</span><span class="p">,</span> <span class="s1">&#39;B6&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
+</div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>The vapour pressure must not exceed 1 kg.cm². It is assumed to blend linearly by volume, being 1.0, 0.6, 1.5 and 0.05 kg.cm² the vapour pressure of light, heavy, cracked oils and residuum resp.</p>
-$$
-    1.0 LOJF + 0.6 HOJF + 1.5 COJF + 0.05 RJF \le JF
-$$
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lojf</span> <span class="o">+</span> <span class="mf">0.6</span><span class="o">*</span><span class="n">hojf</span> <span class="o">+</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">cojf</span> <span class="o">+</span> <span class="mf">0.05</span><span class="o">*</span><span class="n">rjf</span> <span class="o">&lt;=</span> <span class="n">jf</span><span class="p">,</span> <span class="s1">&#39;B7&#39;</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
 </div>
-</div>
-</div>
-
 </div></div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="Fuel-oil">Fuel oil<a class="anchor-link" href="#Fuel-oil">&#182;</a></h4><p>Similar to jet fuel but with a fixed ratio of the components.</p>
-<p>A ratio of 10:4:3:1 (total 18 parts) of light oil, cracked oil, heavy oil and residuum must be respected. Since this is a fixed ratio, we can use a single constraint (for each variable) to ensure both the ratio of production and the continuity.
-$$
-    LO = LOCGO + LOJF + \frac{10}{18} FO \\
-    CO = COJF + \frac{4}{18} FO \\
-    HO = HOCGO + HOJF + \frac{3}{18} FO \\
-    R = RLBO + RJF + \frac{1}{18} FO \\
-$$</p>
-<p>Note that this saves us from creating 4 additional variables, namely LOFO, COFO, HOFO and RFO.</p>
+<h4 id="Fuel-oil">Fuel oil<a class="anchor-link" href="#Fuel-oil">&#182;</a></h4><p>Similar to jet fuel but with a fixed ratio of 10:4:3:1 (total 18 parts) of light oil, cracked oil, heavy oil and residuum must be respected.</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;FO&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lo</span> <span class="o">==</span> <span class="n">locgo</span> <span class="o">+</span> <span class="n">lojf</span> <span class="o">+</span> <span class="mf">0.55</span><span class="o">*</span><span class="n">fo</span><span class="p">,</span> <span class="s1">&#39;B8&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">co</span> <span class="o">==</span> <span class="n">cojf</span> <span class="o">+</span> <span class="mf">0.22</span><span class="o">*</span><span class="n">fo</span><span class="p">,</span> <span class="s1">&#39;B9&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">ho</span> <span class="o">==</span> <span class="n">hocgo</span> <span class="o">+</span> <span class="n">hojf</span> <span class="o">+</span> <span class="mf">0.17</span><span class="o">*</span><span class="n">fo</span><span class="o">/</span><span class="mi">18</span><span class="p">,</span> <span class="s1">&#39;B10&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">r</span> <span class="o">==</span> <span class="n">rlbo</span> <span class="o">+</span> <span class="n">rjf</span> <span class="o">+</span> <span class="mf">0.06</span><span class="o">*</span><span class="n">fo</span><span class="p">,</span> <span class="s1">&#39;B11&#39;</span><span class="p">)</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Objective">Objective<a class="anchor-link" href="#Objective">&#182;</a></h2><p>The fuels, fuel oil and lube-oil are the final products to be sold.</p>
+<h3 id="Goal">Goal<a class="anchor-link" href="#Goal">&#182;</a></h3><p>The fuels, fuel oil and lube-oil are the final products to be sold.</p>
 <table>
 <thead><tr>
 <th></th>
@@ -15128,17 +14640,617 @@ $$</p>
 </table>
 
 </div>
+</div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Constraints">Constraints<a class="anchor-link" href="#Constraints">&#182;</a></h2>
+</div>
 </div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Five types of constraints:</p>
+<ul>
+<li>Availability</li>
+<li>Production</li>
+<li>Continuity</li>
+<li>Capacity</li>
+<li>Quality</li>
+</ul>
+
+</div>
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Availability">Availability<a class="anchor-link" href="#Availability">&#182;</a></h3>
+</div>
+</div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The input of the whole process, that is the two crude oils. We'll use CRA and CRB for the amount of each oil used.</p>
 $$
-    \max 7.0 PMF + 6.0 RMF + 4.0 JF + 3.5 FO + 1.5 LBO
+    CRA \le 20 000 \\
+    CRB \le 30 000
 $$
 </div>
 </div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cra</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CRA&#39;</span><span class="p">)</span>
+<span class="n">crb</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">30000</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CRB&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Production">Production<a class="anchor-link" href="#Production">&#182;</a></h3><p>These constraints tie the produced products to the input "ingredients".</p>
+
+</div>
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Distillation">Distillation<a class="anchor-link" href="#Distillation">&#182;</a></h4><p>The relation between the crude oils consumed and the resulting products is
+$$
+\begin{bmatrix}
+0.1     &amp;     0.15    \\
+0.2     &amp;     0.25    \\
+0.2     &amp;     0.18    \\
+0.12    &amp;     0.08    \\
+0.2     &amp;     0.19    \\
+0.13    &amp;     0.12 
+\end{bmatrix} \begin{bmatrix} CRA \\ CRB \end{bmatrix} = \begin{bmatrix}
+LN \\
+MN \\
+HN \\
+LO \\
+HO \\
+R
+\end{bmatrix}
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># outputs</span>
+<span class="n">ln</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LN&#39;</span><span class="p">)</span>
+<span class="n">mn</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;MN&#39;</span><span class="p">)</span>
+<span class="n">hn</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HN&#39;</span><span class="p">)</span>
+<span class="n">lo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LO&#39;</span><span class="p">)</span>
+<span class="n">ho</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HO&#39;</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.1</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.15</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">ln</span><span class="p">,</span> <span class="s1">&#39;Prod_LN&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.2</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.25</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">mn</span><span class="p">,</span> <span class="s1">&#39;Prod_MN&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.2</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.18</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">hn</span><span class="p">,</span> <span class="s1">&#39;Prod_HN&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.12</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.08</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">lo</span><span class="p">,</span> <span class="s1">&#39;Prod_LO&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.2</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.19</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">ho</span><span class="p">,</span> <span class="s1">&#39;Prod_HO&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.13</span><span class="o">*</span><span class="n">cra</span> <span class="o">+</span> <span class="mf">0.12</span><span class="o">*</span><span class="n">crb</span> <span class="o">==</span> <span class="n">r</span><span class="p">,</span> <span class="s1">&#39;Prod_R&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Reforming">Reforming<a class="anchor-link" href="#Reforming">&#182;</a></h4><p>We denote the amount of each nafta used for reformed gasoline production through the suffix -RG.</p>
+<p>We assure the relation between the naftas used for reforming and the reforming gasoline produced $$
+0.6 LNRG + 0.52 MNRG + 0.45 HNRG = RG
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># inputs</span>
+<span class="n">lnrg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LNRG&#39;</span><span class="p">)</span>
+<span class="n">mnrg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;MNRG&#39;</span><span class="p">)</span>
+<span class="n">hnrg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HNRG&#39;</span><span class="p">)</span>
+
+<span class="c1"># outputs</span>
+<span class="n">rg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RG&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.6</span><span class="o">*</span><span class="n">lnrg</span> <span class="o">+</span> <span class="mf">0.52</span><span class="o">*</span><span class="n">mnrg</span> <span class="o">+</span> <span class="mf">0.45</span><span class="o">*</span><span class="n">hnrg</span> <span class="o">==</span> <span class="n">rg</span><span class="p">,</span> <span class="s1">&#39;Prod_RG&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Cracking">Cracking<a class="anchor-link" href="#Cracking">&#182;</a></h4><p>As we saw, cracked oil and gasoline are produced from light and heavy oil.
+$$
+    0.68 LOCGO + 0.75HOCGO = CO \\
+    0.28 LOCGO + 0.20HOCGO = CG
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># inputs</span>
+<span class="n">locgo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LOCGO&#39;</span><span class="p">)</span>
+<span class="n">hocgo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HOCGO&#39;</span><span class="p">)</span>
+
+<span class="c1"># outputs</span>
+<span class="n">co</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CO&#39;</span><span class="p">)</span>
+<span class="n">cg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CG&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.68</span><span class="o">*</span><span class="n">locgo</span> <span class="o">+</span> <span class="mf">0.75</span><span class="o">*</span><span class="n">hocgo</span> <span class="o">==</span> <span class="n">co</span><span class="p">,</span> <span class="s1">&#39;Prod_CO&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.28</span><span class="o">*</span><span class="n">locgo</span> <span class="o">+</span> <span class="mf">0.20</span><span class="o">*</span><span class="n">hocgo</span> <span class="o">==</span> <span class="n">cg</span><span class="p">,</span> <span class="s1">&#39;Prod_CG&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>And lube-oil is produced from residuum.
+$$
+    0.5 RLBO = LBO
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># inputs</span>
+<span class="n">rlbo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RLBO&#39;</span><span class="p">)</span>
+
+<span class="c1"># output</span>
+<span class="n">lbo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LBO&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">rlbo</span> <span class="o">==</span> <span class="n">lbo</span><span class="p">,</span> <span class="s1">&#39;Prod_LBO&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Blending">Blending<a class="anchor-link" href="#Blending">&#182;</a></h4><p>From the naftas and the gasolines, one can produce <strong>premium or regular motor fuel</strong>.
+$$
+    LNPMF + MNPMF + HNPMF + RGPMF + CGPMF = PMF \\
+    LNRMF + MNRMF + HNRMF + RGRMF + CGRMF = RMF
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># inputs</span>
+<span class="n">lnpmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LNPMF&#39;</span><span class="p">)</span>
+<span class="n">mnpmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;MNPMF&#39;</span><span class="p">)</span>
+<span class="n">hnpmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HNPMF&#39;</span><span class="p">)</span>
+<span class="n">rgpmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RGPMF&#39;</span><span class="p">)</span>
+<span class="n">cgpmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CGPMF&#39;</span><span class="p">)</span>
+
+<span class="c1"># outputs</span>
+<span class="n">lnrmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LNRMF&#39;</span><span class="p">)</span>
+<span class="n">mnrmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;MNRMF&#39;</span><span class="p">)</span>
+<span class="n">hnrmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HNRMF&#39;</span><span class="p">)</span>
+<span class="n">rgrmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RGRMF&#39;</span><span class="p">)</span>
+<span class="n">cgrmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;CGRMF&#39;</span><span class="p">)</span>
+
+<span class="n">pmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PMF&#39;</span><span class="p">)</span>
+<span class="n">rmf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RMF&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lnpmf</span> <span class="o">+</span> <span class="n">mnpmf</span> <span class="o">+</span> <span class="n">hnpmf</span> <span class="o">+</span> <span class="n">rgpmf</span> <span class="o">+</span> <span class="n">cgpmf</span> <span class="o">==</span> <span class="n">pmf</span><span class="p">,</span> <span class="s1">&#39;Prod_PMF&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lnrmf</span> <span class="o">+</span> <span class="n">mnrmf</span> <span class="o">+</span> <span class="n">hnrmf</span> <span class="o">+</span> <span class="n">rgrmf</span> <span class="o">+</span> <span class="n">cgrmf</span> <span class="o">==</span> <span class="n">rmf</span><span class="p">,</span> <span class="s1">&#39;Prod_RMF&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Also, there's a lower limit of premium motor fuel production given the amount of regular motor fuel produced.
+$$
+    PMF \ge 0.4 RMF
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">pmf</span> <span class="o">&gt;=</span> <span class="mf">0.4</span><span class="o">*</span><span class="n">rmf</span><span class="p">,</span> <span class="s1">&#39;Prod_PMF_RMF&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>Jet fuel</strong> is a mixture of all the oils and residuum.
+$$
+    LOJF + HOJF + COJF + RJF = JF
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># inputs</span>
+<span class="n">lojf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LOJF&#39;</span><span class="p">)</span>
+<span class="n">hojf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HOJF&#39;</span><span class="p">)</span>
+<span class="n">cojf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;COJF&#39;</span><span class="p">)</span>
+<span class="n">rjf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;RJF&#39;</span><span class="p">)</span>
+
+<span class="c1"># output</span>
+<span class="n">jf</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;JF&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lojf</span> <span class="o">+</span> <span class="n">hojf</span> <span class="o">+</span> <span class="n">cojf</span> <span class="o">+</span> <span class="n">rjf</span> <span class="o">==</span> <span class="n">jf</span><span class="p">,</span> <span class="s1">&#39;Prod_JF&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Since <strong>fuel oil</strong> is produced through a fixed ratio of light oil, cracked oil, heavy oil and residuum, we would have
+$$
+    LOFO = \frac{10}{18} FO \\
+    COFO = \frac{4}{18} FO \\
+    HOFO = \frac{3}{18} FO \\
+    RFO = \frac{1}{18} FO \\
+$$
+But this is not necessary, as we can add this straight into the continuity constraint of each of these variables later on, reducing the amount of variables and constraints.</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fo</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;FO&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Continuity">Continuity<a class="anchor-link" href="#Continuity">&#182;</a></h3><p>These constraints assure that the destinations sum up to the productions.</p>
+
+</div>
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Naftas">Naftas<a class="anchor-link" href="#Naftas">&#182;</a></h4><p>Naftas can be used for producing reformed gasoline, premium and regular motor fuel.
+$$
+    LN = LNRG + LNPMF + LNRMF \\
+    MN = MNRG + MNPMF + MNRMF \\
+    HN = HNRG + HNPMF + HNRMF
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">ln</span> <span class="o">==</span> <span class="n">lnrg</span> <span class="o">+</span> <span class="n">lnpmf</span> <span class="o">+</span> <span class="n">lnrmf</span><span class="p">,</span> <span class="s1">&#39;Con_LN&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">mn</span> <span class="o">==</span> <span class="n">mnrg</span> <span class="o">+</span> <span class="n">mnpmf</span> <span class="o">+</span> <span class="n">mnrmf</span><span class="p">,</span> <span class="s1">&#39;Con_MN&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">hn</span> <span class="o">==</span> <span class="n">hnrg</span> <span class="o">+</span> <span class="n">hnpmf</span> <span class="o">+</span> <span class="n">hnrmf</span><span class="p">,</span> <span class="s1">&#39;Con_HN&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Oils-and-residuum">Oils and residuum<a class="anchor-link" href="#Oils-and-residuum">&#182;</a></h4><p>Light and heavy oils are used for cracked oil and gasoline, jet fuel and fuel oil, the latter through a fixed ratio
+$$
+    LO = LOCGO + LOJF + \frac{10}{18} FO \\
+    HO = HOCGO + HOJF + \frac{3}{18} FO \\
+$$</p>
+<p>Cracked oil is used only for jet fuel and fuel oil
+$$
+    CO = COJF + \frac{4}{18} FO \\
+$$</p>
+<p>And residuum is used for lube-oil, jet fuel and fuel oil
+$$
+    R = RLBO + RJF + \frac{1}{18} FO \\
+$$</p>
+
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lo</span> <span class="o">==</span> <span class="n">locgo</span> <span class="o">+</span> <span class="n">lojf</span> <span class="o">+</span> <span class="mf">0.55</span><span class="o">*</span><span class="n">fo</span><span class="p">,</span> <span class="s1">&#39;Con_LO&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">ho</span> <span class="o">==</span> <span class="n">hocgo</span> <span class="o">+</span> <span class="n">hojf</span> <span class="o">+</span> <span class="mf">0.17</span><span class="o">*</span><span class="n">fo</span><span class="p">,</span> <span class="s1">&#39;Con_HO&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">co</span> <span class="o">==</span> <span class="n">cojf</span> <span class="o">+</span> <span class="mf">0.22</span><span class="o">*</span><span class="n">fo</span><span class="p">,</span> <span class="s1">&#39;Con_CO&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">r</span> <span class="o">==</span> <span class="n">rlbo</span> <span class="o">+</span> <span class="n">rjf</span> <span class="o">+</span> <span class="mf">0.06</span><span class="o">*</span><span class="n">fo</span><span class="p">,</span> <span class="s1">&#39;Con_R&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Gasolines">Gasolines<a class="anchor-link" href="#Gasolines">&#182;</a></h4><p>They are only used for the motor fuels
+$$
+    CG = CGPMF + CGRMF \\
+    RG = RGPMF + RGRMF
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">cg</span> <span class="o">==</span> <span class="n">cgpmf</span> <span class="o">+</span> <span class="n">cgrmf</span><span class="p">,</span> <span class="s1">&#39;Con_CG&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">rg</span> <span class="o">==</span> <span class="n">rgpmf</span> <span class="o">+</span> <span class="n">rgrmf</span><span class="p">,</span> <span class="s1">&#39;Con_RG&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Capacity">Capacity<a class="anchor-link" href="#Capacity">&#182;</a></h3><p>These constraints dictate the capacity of each process.</p>
+
+</div>
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Distillation">Distillation<a class="anchor-link" href="#Distillation">&#182;</a></h4><p>The distillery has a limit of 45 000 barrels of crude oil a day. $$
+    CRA + CRB \le 45 000
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">cra</span> <span class="o">+</span> <span class="n">crb</span> <span class="o">&lt;=</span> <span class="mi">45000</span><span class="p">,</span> <span class="s1">&#39;Cap_Dist&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Reforming">Reforming<a class="anchor-link" href="#Reforming">&#182;</a></h4><p>At most 10 000 barrels of naphta can be reformed per day. $$
+    LNRG + MNRG + HNRG \le 10000
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lnrg</span> <span class="o">+</span> <span class="n">mnrg</span> <span class="o">+</span> <span class="n">hnrg</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;Cap_Ref&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Cracking">Cracking<a class="anchor-link" href="#Cracking">&#182;</a></h4><p>This facility has a limit of 8000 barrels of oil a day. $$
+    LOCGO + HOCGO \le 8000
+$$</p>
+
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">locgo</span> <span class="o">+</span> <span class="n">hocgo</span> <span class="o">&lt;=</span> <span class="mi">8000</span><span class="p">,</span> <span class="s1">&#39;Cap_Crack&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Regarding lube-oil, <em>at least</em> 500 barrels and <em>at most</em> 1000 barrels must be produced. $$
+    LBO \ge 500 \\
+    LBO \le 1000
+$$</p>
+
+</div>
+</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lbo</span> <span class="o">&gt;=</span> <span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;Cap_LBO_min&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lbo</span> <span class="o">&lt;=</span> <span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;Cap_LBO_max&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Quality">Quality<a class="anchor-link" href="#Quality">&#182;</a></h3><p>These are the constraints that control side-aspects of the processes.</p>
+
+</div>
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Motor-fuel">Motor fuel<a class="anchor-link" href="#Motor-fuel">&#182;</a></h4><p>First, we must respect the octane number of each type of motor fuel, remembering that reformed gasoline and cracked gasoline have an octane number of 115 and 105 resp. while the light, medium and heavy naphtas have 90, 80 and 70 octane number resp. and we're aiming for 94 for premium and 84 for regular.</p>
+$$
+    90 LNPMF + 80 MNPMF + 70 HNPMF + 115 RGPMF + 105 CGPMF \ge 94 PMF \\
+    90 LNRMF + 80 MNRMF + 70 HNRMF + 115 RGRMF + 105 CGRMF \ge 84 RMF
+$$
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mi">90</span><span class="o">*</span><span class="n">lnpmf</span> <span class="o">+</span> <span class="mi">80</span><span class="o">*</span><span class="n">mnpmf</span> <span class="o">+</span> <span class="mi">70</span><span class="o">*</span><span class="n">hnpmf</span> <span class="o">+</span> <span class="mi">115</span><span class="o">*</span><span class="n">rgpmf</span> <span class="o">+</span> <span class="mi">105</span><span class="o">*</span><span class="n">cgpmf</span> <span class="o">&gt;=</span> <span class="mi">94</span><span class="o">*</span><span class="n">pmf</span><span class="p">,</span> <span class="s1">&#39;Qual_PMF&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mi">90</span><span class="o">*</span><span class="n">lnrmf</span> <span class="o">+</span> <span class="mi">80</span><span class="o">*</span><span class="n">mnrmf</span> <span class="o">+</span> <span class="mi">70</span><span class="o">*</span><span class="n">hnrmf</span> <span class="o">+</span> <span class="mi">115</span><span class="o">*</span><span class="n">rgrmf</span> <span class="o">+</span> <span class="mi">105</span><span class="o">*</span><span class="n">cgrmf</span> <span class="o">&gt;=</span> <span class="mi">84</span><span class="o">*</span><span class="n">rmf</span><span class="p">,</span> <span class="s1">&#39;Qual_RMF&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Jet-fuel">Jet fuel<a class="anchor-link" href="#Jet-fuel">&#182;</a></h4><p>Similar to motor fuel, jet fuel has a restriction on its vapour pressure.</p>
+$$
+    1.0 LOJF + 0.6 HOJF + 1.5 COJF + 0.05 RJF \le JF
+$$
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">lojf</span> <span class="o">+</span> <span class="mf">0.6</span><span class="o">*</span><span class="n">hojf</span> <span class="o">+</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">cojf</span> <span class="o">+</span> <span class="mf">0.05</span><span class="o">*</span><span class="n">rjf</span> <span class="o">&lt;=</span> <span class="n">jf</span><span class="p">,</span> <span class="s1">&#39;Qual_JF&#39;</span><span class="p">)</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Objective-function">Objective function<a class="anchor-link" href="#Objective-function">&#182;</a></h2><p>Given the prices of the products we can sell, one can state the objective as</p>
+$$
+    \max 7.0 PMF + 6.0 RMF + 4.0 JF + 3.5 FO + 1.5 LBO
+$$
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">setObjective</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">pmf</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">rmf</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">jf</span> <span class="o">+</span> <span class="mf">3.5</span><span class="o">*</span><span class="n">fo</span> <span class="o">+</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">lbo</span><span class="p">,</span> <span class="n">GRB</span><span class="o">.</span><span class="n">MAXIMIZE</span><span class="p">)</span>
@@ -15151,10 +15263,21 @@ $$
 </div>
 </div>
 
-</div></div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><img src="Refinery.png"></p>
+
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Optimization">Optimization<a class="anchor-link" href="#Optimization">&#182;</a></h2>
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">time</span> m.optimize()
@@ -15180,24 +15303,24 @@ $$
 <pre>Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (linux64)
 Thread count: 2 physical cores, 4 logical processors, using up to 4 threads
 Optimize a model with 31 rows, 36 columns and 108 nonzeros
-Model fingerprint: 0xa4e4f8c1
+Model fingerprint: 0x8ec7e929
 Coefficient statistics:
-  Matrix range     [9e-03, 1e+02]
+  Matrix range     [5e-02, 1e+02]
   Objective range  [2e+00, 7e+00]
   Bounds range     [2e+04, 3e+04]
   RHS range        [5e+02, 4e+04]
 Presolve removed 15 rows and 14 columns
-Presolve time: 0.03s
+Presolve time: 0.01s
 Presolved: 16 rows, 22 columns, 72 nonzeros
 
 Iteration    Objective       Primal Inf.    Dual Inf.      Time
        0    1.3000000e+31   5.000000e+29   1.300000e+01      0s
-      15    2.1136513e+05   0.000000e+00   0.000000e+00      0s
+      14    2.1136513e+05   0.000000e+00   0.000000e+00      0s
 
-Solved in 15 iterations and 0.04 seconds
+Solved in 14 iterations and 0.03 seconds
 Optimal objective  2.113651348e+05
-CPU times: user 15 ms, sys: 7.85 ms, total: 22.9 ms
-Wall time: 53.3 ms
+CPU times: user 32.7 ms, sys: 11.6 ms, total: 44.2 ms
+Wall time: 40.3 ms
 </pre>
 </div>
 </div>
@@ -15206,20 +15329,29 @@ Wall time: 53.3 ms
 
 </div>
 
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div></div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[41]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Obj: £</span><span class="si">%g</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">m</span><span class="o">.</span><span class="n">objVal</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">getVars</span><span class="p">()):</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%g</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">varName</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
+<span class="n">oils</span> <span class="o">=</span> <span class="p">[</span><span class="n">cra</span><span class="p">,</span> <span class="n">crb</span><span class="p">]</span>
+<span class="n">ingredients</span> <span class="o">=</span> <span class="p">[</span><span class="n">ln</span><span class="p">,</span> <span class="n">mn</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">ho</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">rg</span><span class="p">,</span> <span class="n">cg</span><span class="p">,</span> <span class="n">co</span><span class="p">]</span>
+<span class="n">products</span> <span class="o">=</span> <span class="p">[</span><span class="n">pmf</span><span class="p">,</span> <span class="n">rmf</span><span class="p">,</span> <span class="n">jf</span><span class="p">,</span> <span class="n">fo</span><span class="p">,</span> <span class="n">lbo</span><span class="p">]</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">oils</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ingredients</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">products</span><span class="p">))</span>
+
+<span class="n">oils</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="kc">None</span><span class="p">,]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">oils</span><span class="p">)))</span>
+<span class="n">ingredients</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="kc">None</span><span class="p">,]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)))</span>
+<span class="n">products</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="kc">None</span><span class="p">,]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">products</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">oil</span><span class="p">,</span> <span class="n">ingredient</span><span class="p">,</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">oils</span><span class="p">,</span> <span class="n">ingredients</span><span class="p">,</span> <span class="n">products</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">[</span><span class="n">oil</span><span class="p">,</span> <span class="n">ingredient</span><span class="p">,</span> <span class="n">product</span><span class="p">]:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%g</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">varName</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="o">*</span><span class="p">(</span><span class="mi">30</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15239,26 +15371,143 @@ Wall time: 53.3 ms
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Obj: £211365
+<pre>CRA 15000                     LN 6000                       PMF 6817.78                   
+CRB 30000                     MN 10500                      RMF 17044.4                   
+                              HN 8400                       JF 15156                      
+                              LO 4200                       FO 0                          
+                              HO 8700                       LBO 500                       
+                              R 5550                                                      
+                              RG 2433.09                                                  
+                              CG 1936                                                     
+                              CO 5706                                                     
+</pre>
+</div>
+</div>
 
-CRA 15000                     CRB 30000
-LN 6000                       MN 10500
-HN 8400                       LO 4200
-HO 8700                       R 5550
-LNRG 0                        MNRG 0
-HNRG 5406.86                  RG 2433.09
-LOCGO 4200                    HOCGO 3800
-CO 5706                       CG 1936
-RLBO 1000                     LBO 500
-LNPMF 0                       MNPMF 3537.52
-HNPMF 0                       RGPMF 1344.25
-CGPMF 1936                    LNRMF 6000
-MNRMF 6962.48                 HNRMF 2993.14
-RGRMF 1088.83                 CGRMF 0
-PMF 6817.78                   RMF 17044.4
-LOJF 0                        HOJF 4900
-COJF 5706                     RJF 4550
-JF 15156                      FO 0
+</div>
+
+</div>
+
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Sensitivity-analysis">Sensitivity analysis<a class="anchor-link" href="#Sensitivity-analysis">&#182;</a></h3>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Revenue by increasing supply of&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Crude oil 1 £</span><span class="si">{</span><span class="n">cra</span><span class="o">.</span><span class="n">RC</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">/Barrel&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Crude oil 2 £</span><span class="si">{</span><span class="n">crb</span><span class="o">.</span><span class="n">RC</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">/Barrel&quot;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Revenue by increasing supply of
+Crude oil 1 £0.00/Barrel
+Crude oil 2 £0.26/Barrel
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Capacities</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distillery: </span><span class="se">\t</span><span class="s2">£</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">getConstrByName</span><span class="p">(</span><span class="s1">&#39;Cap_Dist&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Pi</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">/Barrel&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reforming: </span><span class="se">\t</span><span class="s2">£</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">getConstrByName</span><span class="p">(</span><span class="s1">&#39;Cap_Ref&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Pi</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">/Barrel&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cracking: </span><span class="se">\t</span><span class="s2">£</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">getConstrByName</span><span class="p">(</span><span class="s1">&#39;Cap_Crack&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Pi</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">/Barrel&quot;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Capacities
+
+Distillery: 	£4.47/Barrel
+Reforming: 	£0.00/Barrel
+Cracking: 	£0.68/Barrel
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Lube-oil restrictions</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decreasing lower limit: £</span><span class="si">{</span><span class="o">-</span><span class="n">m</span><span class="o">.</span><span class="n">getConstrByName</span><span class="p">(</span><span class="s1">&#39;Cap_LBO_min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Pi</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">/Barrel&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Increasing upper limit: £</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">getConstrByName</span><span class="p">(</span><span class="s1">&#39;Cap_LBO_max&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Pi</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">/Barrel&quot;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Lube-oil restrictions
+
+Decreasing lower limit: £6.50/Barrel
+Increasing upper limit: £0.00/Barrel
 </pre>
 </div>
 </div>
@@ -15272,12 +15521,12 @@ JF 15156                      FO 0
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Questions?">Questions?<a class="anchor-link" href="#Questions?">&#182;</a></h2>
 </div>
-</div><div class="fragment">
+</div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Thank-you!">Thank you!<a class="anchor-link" href="#Thank-you!">&#182;</a></h2>
 </div>
-</div></div></section></section>
+</div></section></section>
 </div>
 </div>
 </body>
